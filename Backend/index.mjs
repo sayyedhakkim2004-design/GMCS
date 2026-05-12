@@ -17,7 +17,7 @@ const app=express()
 dotenv.config();
 app.use(express.json());
 app.use(cors({
-  origin: "",
+  origin: "https://gmcs-live.vercel.app",
   credentials: true
 }));
 app.use(cookieParser());
