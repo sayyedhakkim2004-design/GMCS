@@ -1,52 +1,48 @@
-
-import express from "express"
-import cors from "cors"
+import express from "express";
+import cors from "cors";
 import mongoose from "mongoose";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+
 import authRouter from "./Routes/userDataRoutes.js";
 import adminRouter from "./Routes/adminDataRoutes.js";
-import cookieParser from "cookie-parser";
-import customerRoute from "./Routes/customerRoute.js"
+import customerRoute from "./Routes/customerRoute.js";
 import adminProductRouter from "./Routes/adminProductRoute.js";
 
-
-
-
-
-const app=express()
 dotenv.config();
+
+const app = express();
+
 app.use(express.json());
-app.use(cors({
-  origin: "https://gmcs-live.vercel.app",
-  credentials: true
-}));
+
+app.use(
+  cors({
+    origin: "https://gmcs-live.vercel.app",
+    credentials: true,
+  })
+);
+
 app.use(cookieParser());
 
-
-//Mongodb Connection
-
-if (!process.env.mongoURI) {
-    console.error("Mongo URI is NOT defined in .env");
-    process.exit(1);
-}
-mongoose.connect(process.env.mongoURI)
-.then(()=>{
-    console.log("MongoDb Connected Successfully")
-})
-.catch((err)=>{
+// MongoDB Connection
+mongoose
+  .connect(process.env.mongoURI)
+  .then(() => {
+    console.log("MongoDB Connected Successfully");
+  })
+  .catch((err) => {
     console.log(err);
-    console.log("Error Occured",err.message)
-})
+  });
+
 app.get("/", (req, res) => {
   res.send("Backend Running");
 });
-//user Data routes
-app.use("/api/v1",authRouter);
-app.use("/api/v1/admin",adminRouter)
-app.use("/api/v1/customer",customerRoute);
-app.use("/api/v1/product",adminProductRouter)
 
+// Routes
+app.use("/api/v1", authRouter);
+app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/customer", customerRoute);
+app.use("/api/v1/product", adminProductRouter);
 
-app.listen(process.env.PORT,()=>{
-    console.log(`App is Listening to the Server ${process.env.PORT} `)
-})
+// IMPORTANT
+export default app;
