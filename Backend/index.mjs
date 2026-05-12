@@ -37,7 +37,9 @@ mongoose.connect(process.env.mongoURI)
     console.log(err);
     console.log("Error Occured",err.message)
 })
-
+app.get("/", (req, res) => {
+  res.send("Backend Running");
+});
 //user Data routes
 app.use("/api/v1",authRouter);
 app.use("/api/v1/admin",adminRouter)
