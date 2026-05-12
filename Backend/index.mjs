@@ -41,5 +41,6 @@ app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/customer", customerRoute);
 app.use("/api/v1/product", adminProductRouter);
 
-// IMPORTANT
-export default app;
+app.listen(process.env.PORT,()=>{
+    console.log(`App is Listening to the Server ${process.env.PORT} `)
+})
