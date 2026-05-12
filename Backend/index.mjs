@@ -16,10 +16,7 @@ const app = express();
 app.use(express.json());
 
 app.use(
-  cors({
-    origin: "https://gmcs-live.vercel.app",
-    credentials: true,
-  })
+  cors()
 );
 
 app.use(cookieParser());
